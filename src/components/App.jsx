@@ -19,7 +19,6 @@ const App = () => {
   const [tags, setTags] = useState('');
   const [largeImageURL, setLargeImageURL] = useState('');
 
-
   useEffect(() => {
     if (searchQuery === '') {
       return;
@@ -29,7 +28,6 @@ const App = () => {
       try {
         setLoading(true);
         const imageData = await fetchImages(searchQuery, page);
-
         setTotalHits(imageData.totalHits);
 
         if (imageData.hits.length === 0) {
@@ -51,14 +49,19 @@ const App = () => {
   const handleLoadMore = () => {
     setPage(prevState => prevState + 1);
   };
+
   const handleFormSubmit = text => {
     setPage(1);
     setSearchQuery(text.trim());
+
+    if (text === searchQuery) {
+      Notify.failure(` Try another word`);
+      return;
+    }
     setArticles([]);
   };
   const handleImageClick = index => {
     toggleModal();
-
     setShowModal(true);
     setLargeImageURL(articles[index].largeImageURL);
     setTags(articles[index].tags);
@@ -70,13 +73,16 @@ const App = () => {
   return (
     <>
       <div>
-        <Searchbar onSubmit={handleFormSubmit} />
+        {<Searchbar onSubmit={handleFormSubmit} />}
+
         {loading && <Loader />}
 
         {error && <p>{error.message}</p>}
+
         {imagesCount > 0 && (
           <ImageGallery articles={articles} onImageClick={handleImageClick} />
         )}
+
         {imagesCount > 0 && imagesCount !== totalHits && (
           <Button loadMore={handleLoadMore} />
         )}

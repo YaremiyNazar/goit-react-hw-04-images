@@ -13,7 +13,7 @@ const ImageGallery = ({ articles, onImageClick }) => {
             key={id}
             index={index}
             tags={tags}
-            ImgURL={webformatURL}
+            imgURL={webformatURL}
             onImageClick={onImageClick}
           />
         );

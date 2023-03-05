@@ -1,16 +1,18 @@
-import { useState } from 'react';
+import { useState} from 'react';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { MdLocationSearching } from 'react-icons/md';
-
 import PropTypes from 'prop-types';
 import css from '../Searchbar/Searchbar.module.css';
+
+
 
 const Searchbar = ({ onSubmit }) => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleChange = event => {
-    setSearchQuery(event.currentTarget.value.toLowerCase());
+    setSearchQuery(event.target.value.toLowerCase());
   };
+
   const formSubmit = event => {
     event.preventDefault();
     if (searchQuery.trim() === '') {
@@ -20,6 +22,7 @@ const Searchbar = ({ onSubmit }) => {
     onSubmit(searchQuery);
     setSearchQuery('');
   };
+
   return (
     <header className={css.searchbar}>
       <form className={css.searchForm} onSubmit={formSubmit}>
@@ -38,6 +41,7 @@ const Searchbar = ({ onSubmit }) => {
           placeholder="Search images and photos"
           value={searchQuery}
           onChange={handleChange}
+
         />
       </form>
     </header>
